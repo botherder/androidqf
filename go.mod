@@ -1,4 +1,4 @@
-module github.com/botherder/snoopdroid2
+module github.com/botherder/androidqf
 
 go 1.15
 

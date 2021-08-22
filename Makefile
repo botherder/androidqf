@@ -36,7 +36,7 @@ windows: deps
 	@cp $(PLATFORMTOOLS_FOLDER)/adb.exe $(ASSETS_FOLDER)
 	@go-bindata -pkg adb -o adb/bindata.go -prefix $(ASSETS_FOLDER) $(ASSETS_FOLDER)
 
-	$(FLAGS_WINDOWS) go build --ldflags '-s -w -extldflags "-static"' -o $(BUILD_FOLDER)/snoopdroid2.exe ./cmd/
+	$(FLAGS_WINDOWS) go build --ldflags '-s -w -extldflags "-static"' -o $(BUILD_FOLDER)/androidqf.exe ./cmd/
 
 darwin: deps
 	@mkdir -p $(BUILD_FOLDER)
@@ -52,7 +52,7 @@ darwin: deps
 	@cp $(PLATFORMTOOLS_FOLDER)/adb $(ASSETS_FOLDER)
 	@go-bindata -pkg adb -o adb/bindata.go -prefix $(ASSETS_FOLDER) $(ASSETS_FOLDER)
 
-	$(FLAGS_DARWIN) go build --ldflags '-s -w' -o $(BUILD_FOLDER)/snoopdroid2-darwin ./cmd/
+	$(FLAGS_DARWIN) go build --ldflags '-s -w' -o $(BUILD_FOLDER)/androidqf-darwin ./cmd/
 
 linux: deps
 	@mkdir -p $(BUILD_FOLDER)
@@ -68,7 +68,7 @@ linux: deps
 	@cp $(PLATFORMTOOLS_FOLDER)/adb $(ASSETS_FOLDER)
 	@go-bindata -pkg adb -o adb/bindata.go -prefix $(ASSETS_FOLDER) $(ASSETS_FOLDER)
 
-	@go build --ldflags '-s -w' -o $(BUILD_FOLDER)/snoopdroid2-linux ./cmd/
+	@go build --ldflags '-s -w' -o $(BUILD_FOLDER)/androidqf-linux ./cmd/
 
 clean:
 	rm -rf $(ASSETS_FOLDER)
