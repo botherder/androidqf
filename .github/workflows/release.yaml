@@ -10,6 +10,8 @@ jobs:
     name: Release Go Binary
     runs-on: ubuntu-latest
     steps:
+    - name: Installing dependencies
+      run: sudo apt-get install go-bindata
     - uses: actions/checkout@v2
     - name: Build binaries
       run: |
