@@ -8,6 +8,8 @@ androidqf is intended to provide a simple and portable cross-platform utility to
 
 ## Build
 
+Executable binaries for Linux, Windows and Mac should be available in the [latest release](https://github.com/botherder/androidqf/releases/latest). In case you have issues running the binary you might want to build it by yourself.
+
 In order to build androidqf you will need Go 1.15+ installed. You will also need to install `make`. When ready you can clone the repository and run any of the following commands, depending on which platform you would like to run androidqf on:
 
     make linux
