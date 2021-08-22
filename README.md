@@ -6,6 +6,8 @@ androidqf (Android Quick Forensics) is a portable tool to simplify the acquisiti
 
 androidqf is intended to provide a simple and portable cross-platform utility to quickly acquire data from Android devices. It is similar in functionality to [mvt-android](https://github.com/mvt-project/mvt). However, contrary to MVT, androidqf is designed to be easily run by non-tech savvy users as well.
 
+[Download androidqf](https://github.com/botherder/androidqf/releases/latest)
+
 ## Build
 
 Executable binaries for Linux, Windows and Mac should be available in the [latest release](https://github.com/botherder/androidqf/releases/latest). In case you have issues running the binary you might want to build it by yourself.
