@@ -1,0 +1,40 @@
+on: 
+  push:
+    tags:
+      - '*'
+
+jobs:
+  releases-matrix:
+    name: Release Go Binary
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build binaries
+      run: |
+        make windows
+        make linux
+        make darwin
+    - name: Upload Windows binary
+      uses: svenstaro/upload-release-action@v2
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        file: build/androidqf.exe
+        asset_name: androidqf-windows.exe
+        tag: ${{ github.ref }}
+        overwrite: true
+    - name: Upload Linux binary
+      uses: svenstaro/upload-release-action@v2
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        file: build/androidqf-linux
+        asset_name: androidqf-linux
+        tag: ${{ github.ref }}
+        overwrite: true        
+    - name: Upload Darwin binary
+      uses: svenstaro/upload-release-action@v2
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        file: build/androidqf-darwin
+        asset_name: androidqf-mac
+        tag: ${{ github.ref }}
+        overwrite: true        
