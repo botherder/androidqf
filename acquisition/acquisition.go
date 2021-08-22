@@ -11,7 +11,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/botherder/snoopdroid2/adb"
+	"github.com/botherder/androidqf/adb"
 	"github.com/satori/go.uuid"
 )
 

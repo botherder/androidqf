@@ -9,7 +9,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/botherder/snoopdroid2/acquisition"
+	"github.com/botherder/androidqf/acquisition"
 	"github.com/i582/cfmt"
 )
 
