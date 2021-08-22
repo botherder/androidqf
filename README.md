@@ -20,7 +20,7 @@ In order to build androidqf you will need Go 1.15+ installed. You will also need
 
 These commands will generate binaries in a *build/* folder.
 
-## Use
+## How to use
 
 Before launching androidqf you need to have the target Android device connected to your computer via USB, and you will need to have enabled USB debugging. Please refer to the [official documentation](https://developer.android.com/studio/debug/dev-options#enable) on how to do this, but also be mindful that Android phones from different manufacturers might require different navigation steps than the defaults.
 
