@@ -13,15 +13,16 @@ jobs:
     - name: Installing dependencies
       run: sudo apt-get install go-bindata
     - uses: actions/checkout@v2
-    - name: Build binaries
-      run: |
-        make windows
-        make linux
-        make darwin
+    - name: Build Windows binary
+      run: make windows
+    - name: Build Linux binary
+      run: make linux
+    - name: Build Darwin binary
+      run: make darwin
     - name: Upload Windows binary
       uses: svenstaro/upload-release-action@v2
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: build/androidqf.exe
         asset_name: androidqf-windows.exe
         tag: ${{ github.ref }}
@@ -29,7 +30,7 @@ jobs:
     - name: Upload Linux binary
       uses: svenstaro/upload-release-action@v2
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: build/androidqf-linux
         asset_name: androidqf-linux
         tag: ${{ github.ref }}
@@ -37,7 +38,7 @@ jobs:
     - name: Upload Darwin binary
       uses: svenstaro/upload-release-action@v2
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: build/androidqf-darwin
         asset_name: androidqf-mac
         tag: ${{ github.ref }}
