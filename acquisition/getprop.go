@@ -19,7 +19,7 @@ func (a *Acquisition) GetProp() error {
 		return fmt.Errorf("failed to run `adb shell getprop`: %v", err)
 	}
 
-	file, err := os.Create(filepath.Join(a.BasePath, "getprop.txt"))
+	file, err := os.Create(filepath.Join(a.StoragePath, "getprop.txt"))
 	if err != nil {
 		return fmt.Errorf("failed to create getprop.txt file: %v", err)
 	}

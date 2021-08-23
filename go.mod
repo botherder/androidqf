@@ -3,6 +3,7 @@ module github.com/botherder/androidqf
 go 1.15
 
 require (
+	filippo.io/age v1.0.0-rc.3
 	github.com/botherder/go-savetime v1.2.1
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-bindata/go-bindata v3.1.2+incompatible // indirect

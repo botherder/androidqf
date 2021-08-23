@@ -20,7 +20,7 @@ func (a *Acquisition) DumpSys() error {
 	}
 
 	fileName := "dumpsys.txt"
-	file, err := os.Create(filepath.Join(a.BasePath, fileName))
+	file, err := os.Create(filepath.Join(a.StoragePath, fileName))
 	if err != nil {
 		return fmt.Errorf("failed to create %s file: %v", fileName, err)
 	}

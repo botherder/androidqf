@@ -58,7 +58,7 @@ func (a *Acquisition) Backup() error {
 	}
 
 	curBackupPath := filepath.Join(cwd, "backup.ab")
-	backupPath := filepath.Join(a.BasePath, "backup.ab")
+	backupPath := filepath.Join(a.StoragePath, "backup.ab")
 
 	err = os.Rename(curBackupPath, backupPath)
 	if err != nil {

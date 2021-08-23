@@ -7,9 +7,10 @@ package adb
 
 import (
 	"io/ioutil"
-	"os"
 	"os/exec"
 	"path/filepath"
+
+	"github.com/botherder/androidqf/utils"
 )
 
 func (a *ADB) findExe() error {
@@ -19,12 +20,7 @@ func (a *ADB) findExe() error {
 		return nil
 	}
 
-	cwd, err := os.Getwd()
-	if err != nil {
-		return err
-	}
-
-	adbPath = filepath.Join(cwd, "adb")
+	adbPath = filepath.Join(utils.GetBinFolder(), "adb")
 	adbData, err := Asset("adb")
 	if err != nil {
 		return err

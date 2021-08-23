@@ -50,7 +50,8 @@ func main() {
 		time.Sleep(5 * time.Second)
 	}
 
-	cfmt.Printf("Started new acquisition at: {{%s}}::magenta|underline\n", acq.BasePath)
+	cfmt.Printf("Started new acquisition {{%s}}::magenta|underline\n",
+		acq.UUID)
 
 	err = acq.GetProp()
 	if err != nil {
@@ -73,7 +74,13 @@ func main() {
 		printError("Failed to create backup", err)
 	}
 
-	cfmt.Printf("Acquisition completed. The results are stored at: {{%s}}::magenta|underline\n", acq.BasePath)
+	err = acq.StoreSecurely()
+	if err != nil {
+		printError("Something failed while encrypting the acquisition", err)
+		cfmt.Println("{{WARNING: The secure storage of the acquisition folder failed! The data is unencrypted!}}::red|bold")
+	}
+
+	fmt.Println("Acquisition completed.")
 
 	systemPause()
 }

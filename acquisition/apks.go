@@ -21,6 +21,7 @@ import (
 const (
 	apkAll      = "All"
 	apkNotKnown = "Only not known"
+	apkNone     = "Do not download any"
 )
 
 type File struct {
@@ -63,7 +64,7 @@ func (a *Acquisition) DownloadAPKs() error {
 	fmt.Println("Would you like to download all APKs or only those not known?")
 	promptAll := promptui.Select{
 		Label: "Download",
-		Items: []string{apkAll, apkNotKnown},
+		Items: []string{apkAll, apkNotKnown, apkNone},
 	}
 	_, downloadOption, err := promptAll.Run()
 	if err != nil {
@@ -71,42 +72,47 @@ func (a *Acquisition) DownloadAPKs() error {
 			err)
 	}
 
-	for i, p := range packages {
-		if downloadOption != apkAll && slice.Contains(packageFilter, p.Name) {
-			continue
-		}
+	// If the user decides to not download any APK, then we skip this.
+	// Otherwise we walk through the list of package, pull the files, and hash them.
+	if downloadOption != apkNone {
+		for i, p := range packages {
+			if downloadOption != apkAll && slice.Contains(packageFilter, p.Name) {
+				continue
+			}
 
-		cfmt.Printf("Found Android package: {{%s}}::cyan|bold\n", p.Name)
+			cfmt.Printf("Found Android package: {{%s}}::cyan|bold\n", p.Name)
 
-		pFilePaths, err := a.ADB.GetPackagePaths(p.Name)
-		if err == nil {
-			for _, pFilePath := range pFilePaths {
-				localPath := a.getPathToLocalCopy(p.Name, pFilePath)
+			pFilePaths, err := a.ADB.GetPackagePaths(p.Name)
+			if err == nil {
+				for _, pFilePath := range pFilePaths {
+					localPath := a.getPathToLocalCopy(p.Name, pFilePath)
 
-				out, err := a.ADB.Pull(pFilePath, localPath)
-				if err != nil {
-					cfmt.Printf("{{ERROR:}}::red|bold Failed to download {{%s}}::cyan|underline: {{%s}}::italic\n",
-						pFilePath, out)
+					out, err := a.ADB.Pull(pFilePath, localPath)
+					if err != nil {
+						cfmt.Printf("{{ERROR:}}::red|bold Failed to download {{%s}}::cyan|underline: {{%s}}::italic\n",
+							pFilePath, out)
 
-					continue
+						continue
+					}
+
+					cfmt.Printf("Downloaded {{%s}}::cyan|underline to {{%s}}::magenta|underline\n",
+						pFilePath, localPath)
+
+					sha256, _ := hashes.FileSHA256(localPath)
+					file := File{
+						Path:      pFilePath,
+						LocalName: filepath.Base(localPath),
+						SHA256:    sha256,
+					}
+
+					packages[i].Files = append(packages[i].Files, file)
 				}
-
-				cfmt.Printf("Downloaded {{%s}}::cyan|underline to {{%s}}::magenta|underline\n",
-					pFilePath, localPath)
-
-				sha256, _ := hashes.FileSHA256(localPath)
-				file := File{
-					Path:      pFilePath,
-					LocalName: filepath.Base(localPath),
-					SHA256:    sha256,
-				}
-
-				packages[i].Files = append(packages[i].Files, file)
 			}
 		}
 	}
 
-	packagesJSONPath := filepath.Join(a.BasePath, "packages.json")
+	// Store the results into a JSON file.
+	packagesJSONPath := filepath.Join(a.StoragePath, "packages.json")
 	packagesJSON, err := os.Create(packagesJSONPath)
 	if err != nil {
 		return fmt.Errorf("failed to save list of installed packages to file: %v",

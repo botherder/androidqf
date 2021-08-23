@@ -12,15 +12,16 @@ import (
 	"time"
 
 	"github.com/botherder/androidqf/adb"
+	"github.com/botherder/androidqf/utils"
 	"github.com/satori/go.uuid"
 )
 
 type Acquisition struct {
-	UUID     string
-	ADB      *adb.ADB
-	BasePath string
-	APKSPath string
-	Datetime time.Time
+	UUID        string
+	ADB         *adb.ADB
+	StoragePath string
+	APKSPath    string
+	Datetime    time.Time
 }
 
 // New returns a new Acquisition instance.
@@ -60,18 +61,13 @@ func (a *Acquisition) initADB() error {
 }
 
 func (a *Acquisition) createFolder() error {
-	cwd, err := os.Getwd()
+	a.StoragePath = filepath.Join(utils.GetBinFolder(), a.UUID)
+	err := os.Mkdir(a.StoragePath, 0755)
 	if err != nil {
 		return err
 	}
 
-	a.BasePath = filepath.Join(cwd, a.UUID)
-	err = os.Mkdir(a.BasePath, 0755)
-	if err != nil {
-		return err
-	}
-
-	a.APKSPath = filepath.Join(a.BasePath, "apks")
+	a.APKSPath = filepath.Join(a.StoragePath, "apks")
 	err = os.Mkdir(a.APKSPath, 0755)
 	if err != nil {
 		return err

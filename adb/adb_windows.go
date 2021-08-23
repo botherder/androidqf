@@ -19,10 +19,7 @@ func (a *ADB) findExe() error {
 		return nil
 	}
 
-	cwd, err := os.Getwd()
-	if err != nil {
-		return err
-	}
+	cwd := utils.GetBinFolder()
 
 	dll1Path := filepath.Join(cwd, "AdbWinApi.dll")
 	dll1Data, err := Asset("AdbWinApi.dll")
