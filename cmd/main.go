@@ -13,6 +13,19 @@ import (
 	"github.com/i582/cfmt"
 )
 
+func init() {
+	cfmt.Print(`
+	{{                    __           _     __      ____ }}::green
+	{{   ____  ____  ____/ /________  (_)___/ /___  / __/ }}::yellow
+	{{  / __ '/ __ \/ __  / ___/ __ \/ / __  / __ '/ /_   }}::red
+	{{ / /_/ / / / / /_/ / /  / /_/ / / /_/ / /_/ / __/   }}::magenta
+	{{ \__,_/_/ /_/\__,_/_/   \____/_/\__,_/\__, /_/      }}::blue
+	{{                                        /_/         }}::cyan
+	`)
+	cfmt.Println("\tandroidqf - Android Quick Forensics")
+	cfmt.Println()
+}
+
 func systemPause() {
 	cfmt.Println("Press {{Enter}}::bold|green to finish ...")
 	os.Stdin.Read(make([]byte, 1))
