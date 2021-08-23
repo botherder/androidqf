@@ -23,23 +23,23 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: build/androidqf.exe
-        asset_name: androidqf-windows.exe
+        file: build/androidqf_windows.exe
+        asset_name: androidqf_windows.exe
         tag: ${{ github.ref }}
         overwrite: true
     - name: Upload Linux binary
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: build/androidqf-linux
-        asset_name: androidqf-linux
+        file: build/androidqf_linux
+        asset_name: androidqf_linux
         tag: ${{ github.ref }}
         overwrite: true        
     - name: Upload Darwin binary
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: build/androidqf-darwin
-        asset_name: androidqf-mac
+        file: build/androidqf_darwin
+        asset_name: androidqf_darwin
         tag: ${{ github.ref }}
         overwrite: true        
