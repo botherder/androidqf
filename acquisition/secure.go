@@ -14,8 +14,8 @@ import (
 	"strings"
 
 	"filippo.io/age"
-	"github.com/botherder/go-savetime/files"
 	"github.com/botherder/androidqf/utils"
+	"github.com/botherder/go-savetime/files"
 )
 
 func (a *Acquisition) StoreSecurely() error {
