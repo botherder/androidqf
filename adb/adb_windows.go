@@ -7,9 +7,10 @@ package adb
 
 import (
 	"io/ioutil"
-	"os"
 	"os/exec"
 	"path/filepath"
+
+	"github.com/botherder/androidqf/utils"
 )
 
 func (a *ADB) findExe() error {
