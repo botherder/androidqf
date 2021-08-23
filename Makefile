@@ -17,7 +17,7 @@ lint:
 deps:
 	@echo "[deps] Installing dependencies..."
 	go mod download
-	go get -u github.com/go-bindata/go-bindata/...
+	go get -u github.com/go-bindata/go-bindata/v3/...
 	@echo "[deps] Dependencies installed."
 
 windows: deps
