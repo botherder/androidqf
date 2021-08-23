@@ -31,6 +31,11 @@ func systemPause() {
 	os.Stdin.Read(make([]byte, 1))
 }
 
+func printError(desc string, err error) {
+	cfmt.Printf("{{ERROR:}}::red|bold %s: {{%s}}::italic\n",
+		desc, err.Error())
+}
+
 func main() {
 	var acq *acquisition.Acquisition
 	var err error
@@ -49,23 +54,23 @@ func main() {
 
 	err = acq.GetProp()
 	if err != nil {
-		cfmt.Printf("{{ERROR:}}::red|bold {{%s}}::italic\n", err)
+		printError("Failed to get device properties", err)
 	}
 	err = acq.Processes()
 	if err != nil {
-		cfmt.Printf("{{ERROR:}}::red|bold {{%s}}::italic\n", err)
+		printError("Failed to get list of running processes", err)
 	}
 	err = acq.DumpSys()
 	if err != nil {
-		cfmt.Printf("{{ERROR:}}::red|bold {{%s}}::italic\n", err)
+		printError("Failed to get output of dumpsys", err)
 	}
 	err = acq.DownloadAPKs()
 	if err != nil {
-		cfmt.Printf("{{ERROR:}}::red|bold {{%s}}::italic\n", err)
+		printError("Failed to download APKs", err)
 	}
 	err = acq.Backup()
 	if err != nil {
-		cfmt.Printf("{{ERROR:}}::red|bold {{%s}}::italic\n", err)
+		printError("Failed to create backup", err)
 	}
 
 	cfmt.Printf("Acquisition completed. The results are stored at: {{%s}}::magenta|underline\n", acq.BasePath)
