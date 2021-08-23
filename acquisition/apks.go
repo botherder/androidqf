@@ -54,7 +54,7 @@ func (a *Acquisition) DownloadAPKs() error {
 
 	packages, err := a.ADB.GetPackages()
 	if err != nil {
-		return fmt.Errorf("Unable to retrieve list of installed packages: %s", err)
+		return fmt.Errorf("failed to retrieve list of installed packages: %v", err)
 	}
 
 	cfmt.Printf("Found a total of {{%d}}::cyan|bold installed packages\n",
@@ -67,7 +67,8 @@ func (a *Acquisition) DownloadAPKs() error {
 	}
 	_, downloadOption, err := promptAll.Run()
 	if err != nil {
-		return fmt.Errorf("Failed to make selection for download option")
+		return fmt.Errorf("failed to make selection for download option: %v",
+			err)
 	}
 
 	for i, p := range packages {
@@ -108,7 +109,8 @@ func (a *Acquisition) DownloadAPKs() error {
 	packagesJSONPath := filepath.Join(a.BasePath, "packages.json")
 	packagesJSON, err := os.Create(packagesJSONPath)
 	if err != nil {
-		return fmt.Errorf("Unable to save list of installed packages to file: %s", err)
+		return fmt.Errorf("failed to save list of installed packages to file: %v",
+			err)
 	}
 	defer packagesJSON.Close()
 

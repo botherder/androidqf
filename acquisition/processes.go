@@ -16,13 +16,13 @@ func (a *Acquisition) Processes() error {
 
 	out, err := a.ADB.Shell("ps")
 	if err != nil {
-		return fmt.Errorf("Unable to run `adb shell ps`: %s", err)
+		return fmt.Errorf("failed to run `adb shell ps`: %v", err)
 	}
 
 	fileName := "ps.txt"
 	file, err := os.Create(filepath.Join(a.BasePath, fileName))
 	if err != nil {
-		return fmt.Errorf("Unable to create %s file: %s", fileName, err)
+		return fmt.Errorf("failed to create %s file: %v", fileName, err)
 	}
 	defer file.Close()
 

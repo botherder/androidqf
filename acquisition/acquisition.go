@@ -32,12 +32,12 @@ func New() (*Acquisition, error) {
 
 	err := acq.initADB()
 	if err != nil {
-		return nil, fmt.Errorf("Failed to initialize adb: %s", err)
+		return nil, fmt.Errorf("failed to initialize adb: %v", err)
 	}
 
 	err = acq.createFolder()
 	if err != nil {
-		return nil, fmt.Errorf("Failed to create acquisition folder: %s", err)
+		return nil, fmt.Errorf("failed to create acquisition folder: %v", err)
 	}
 
 	return &acq, nil
@@ -47,12 +47,13 @@ func (a *Acquisition) initADB() error {
 	var err error
 	a.ADB, err = adb.New()
 	if err != nil {
-		return fmt.Errorf("Failed to initialize adb: %s", err)
+		return fmt.Errorf("failed to initialize adb: %v", err)
 	}
 
 	_, err = a.ADB.GetState()
 	if err != nil {
-		return fmt.Errorf("Unable to get adb state, are you sure a device is connected?")
+		return fmt.Errorf("failed to get adb state (are you sure a device is connected?): %v",
+			err)
 	}
 
 	return nil

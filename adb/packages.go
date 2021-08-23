@@ -6,6 +6,7 @@
 package adb
 
 import (
+	"fmt"
 	"reflect"
 	"strconv"
 	"strings"
@@ -25,7 +26,8 @@ type Package struct {
 func (a *ADB) GetPackages() ([]Package, error) {
 	out, err := a.Shell("pm", "list", "packages", "-U", "-u", "-i")
 	if err != nil {
-		return []Package{}, err
+		return []Package{}, fmt.Errorf("failed to launch `pm list packages` command: %v",
+			err)
 	}
 
 	packages := []Package{}
@@ -92,7 +94,8 @@ func (a *ADB) GetPackages() ([]Package, error) {
 func (a *ADB) GetPackagePaths(packageName string) ([]string, error) {
 	out, err := a.Shell("pm", "path", packageName)
 	if err != nil {
-		return []string{}, err
+		return []string{}, fmt.Errorf("failed to launch `pm path` command: %v",
+			err)
 	}
 
 	packagePaths := []string{}

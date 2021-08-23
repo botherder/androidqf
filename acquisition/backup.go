@@ -28,7 +28,8 @@ func (a *Acquisition) Backup() error {
 	}
 	_, backupOption, err := promptBackup.Run()
 	if err != nil {
-		return fmt.Errorf("Failed to make selection for backup option")
+		return fmt.Errorf("failed to make selection for backup option: %v",
+			err)
 	}
 
 	var arg string

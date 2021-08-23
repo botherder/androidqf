@@ -20,7 +20,8 @@ func New() (*ADB, error) {
 	adb := ADB{}
 	err := adb.findExe()
 	if err != nil {
-		return nil, fmt.Errorf("Unable to find a usable adb executable: %s", err)
+		return nil, fmt.Errorf("failed to find a usable adb executable: %v",
+			err)
 	}
 
 	return &adb, nil

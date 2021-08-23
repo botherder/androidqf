@@ -16,13 +16,13 @@ func (a *Acquisition) DumpSys() error {
 
 	out, err := a.ADB.Shell("dumpsys")
 	if err != nil {
-		return fmt.Errorf("Unable to run `adb shell dumpsys`: %s", err)
+		return fmt.Errorf("failed to run `adb shell dumpsys`: %v", err)
 	}
 
 	fileName := "dumpsys.txt"
 	file, err := os.Create(filepath.Join(a.BasePath, fileName))
 	if err != nil {
-		return fmt.Errorf("Unable to create %s file: %s", fileName, err)
+		return fmt.Errorf("failed to create %s file: %v", fileName, err)
 	}
 	defer file.Close()
 
