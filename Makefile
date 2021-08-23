@@ -18,6 +18,7 @@ deps:
 	@echo "[deps] Installing dependencies..."
 	go mod download
 	go get -u github.com/go-bindata/go-bindata/v3/...
+	go mod tidy
 	@echo "[deps] Dependencies installed."
 
 windows: deps
