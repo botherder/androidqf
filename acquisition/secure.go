@@ -63,6 +63,7 @@ func (a *Acquisition) StoreSecurely() error {
 	if err != nil {
 		return fmt.Errorf("unable to create encrypted file: %v", err)
 	}
+	defer encFile.Close()
 
 	w, err := age.Encrypt(encFile, recipient)
 	if err != nil {
@@ -78,12 +79,10 @@ func (a *Acquisition) StoreSecurely() error {
 		return fmt.Errorf("failed to close encrypted file: %v", err)
 	}
 
-	zipFile.Close()
-	encFile.Close()
-
 	fmt.Println("Acquisition successfully encrypted at ", encFilePath)
 
 	// TODO: we should securely wipe the files.
+	zipFile.Close()
 	err = os.Remove(zipFilePath)
 	if err != nil {
 		return fmt.Errorf("failed to delete the unencrypted compressed archive: %v", err)
