@@ -1,8 +1,9 @@
-BUILD_FOLDER	= $(shell pwd)/build
-ASSETS_FOLDER	= $(shell pwd)/assets
+BUILD_FOLDER  = $(shell pwd)/build
+ASSETS_FOLDER = $(shell pwd)/assets
 
-FLAGS_DARWIN	= GOOS=darwin
-FLAGS_WINDOWS	= GOOS=windows GOARCH=386 CC=i686-w64-mingw32-gcc CGO_ENABLED=1
+FLAGS_LINUX   = GOOS=linux GOARCH=amd64
+FLAGS_DARWIN  = GOOS=darwin GOARCH=amd64
+FLAGS_WINDOWS = GOOS=windows GOARCH=amd64 CC=i686-w64-mingw32-gcc CGO_ENABLED=1
 
 PLATFORMTOOLS_URL     = https://dl.google.com/android/repository/
 PLATFORMTOOLS_WINDOWS = platform-tools-latest-windows.zip
@@ -26,7 +27,7 @@ windows: deps
 	@mkdir -p $(ASSETS_FOLDER)
 
 	@if [ ! -f /tmp/$(PLATFORMTOOLS_WINDOWS) ]; then \
-		echo "Downloading Windows Android Platform Tools..."; \
+		@echo "Downloading Windows Android Platform Tools..."; \
 		wget $(PLATFORMTOOLS_URL)$(PLATFORMTOOLS_WINDOWS) -O /tmp/$(PLATFORMTOOLS_WINDOWS); \
 	fi
 
@@ -37,14 +38,18 @@ windows: deps
 	@cp $(PLATFORMTOOLS_FOLDER)/adb.exe $(ASSETS_FOLDER)
 	@go-bindata -pkg adb -o adb/bindata.go -prefix $(ASSETS_FOLDER) $(ASSETS_FOLDER)
 
-	$(FLAGS_WINDOWS) go build --ldflags '-s -w -extldflags "-static"' -o $(BUILD_FOLDER)/androidqf_windows.exe ./cmd/
+	@echo "[builder] Building Windows binary for amd64"
+
+	$(FLAGS_WINDOWS) go build --ldflags '-s -w -extldflags "-static"' -o $(BUILD_FOLDER)/androidqf_windows_amd64.exe ./cmd/
+
+	@echo "[builder] Done!"
 
 darwin: deps
 	@mkdir -p $(BUILD_FOLDER)
 	@mkdir -p $(ASSETS_FOLDER)
 
 	@if [ ! -f /tmp/$(PLATFORMTOOLS_DARWIN) ]; then \
-		echo "Downloading Darwin Android Platform Tools..."; \
+		@echo "Downloading Darwin Android Platform Tools..."; \
 		wget $(PLATFORMTOOLS_URL)$(PLATFORMTOOLS_DARWIN) -O /tmp/$(PLATFORMTOOLS_DARWIN); \
 	fi
 
@@ -53,14 +58,18 @@ darwin: deps
 	@cp $(PLATFORMTOOLS_FOLDER)/adb $(ASSETS_FOLDER)
 	@go-bindata -pkg adb -o adb/bindata.go -prefix $(ASSETS_FOLDER) $(ASSETS_FOLDER)
 
-	$(FLAGS_DARWIN) go build --ldflags '-s -w' -o $(BUILD_FOLDER)/androidqf_darwin ./cmd/
+	@echo "[builder] Building Darwin binary for amd64"
+
+	$(FLAGS_DARWIN) go build --ldflags '-s -w' -o $(BUILD_FOLDER)/androidqf_darwin_amd64 ./cmd/
+
+	@echo "[builder] Done!"
 
 linux: deps
 	@mkdir -p $(BUILD_FOLDER)
 	@mkdir -p $(ASSETS_FOLDER)
 
 	@if [ ! -f /tmp/$(PLATFORMTOOLS_LINUX) ]; then \
-		echo "Downloading Linux Android Platform Tools..."; \
+		@echo "Downloading Linux Android Platform Tools..."; \
 		wget $(PLATFORMTOOLS_URL)$(PLATFORMTOOLS_LINUX) -O /tmp/$(PLATFORMTOOLS_LINUX); \
 	fi
 
@@ -69,7 +78,11 @@ linux: deps
 	@cp $(PLATFORMTOOLS_FOLDER)/adb $(ASSETS_FOLDER)
 	@go-bindata -pkg adb -o adb/bindata.go -prefix $(ASSETS_FOLDER) $(ASSETS_FOLDER)
 
-	@go build --ldflags '-s -w' -o $(BUILD_FOLDER)/androidqf_linux ./cmd/
+	@echo "[builder] Building Linux binary for amd64"
+
+	@$(FLAGS_LINUX) go build --ldflags '-s -w' -o $(BUILD_FOLDER)/androidqf_linux_amd64 ./cmd/
+
+	@echo "[builder] Done!"
 
 clean:
 	rm -rf $(ASSETS_FOLDER)
