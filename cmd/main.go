@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/botherder/androidqf/acquisition"
-	"github.com/i582/cfmt"
+	"github.com/i582/cfmt/cmd/cfmt"
 )
 
 func init() {

@@ -14,7 +14,7 @@ import (
 
 	"github.com/botherder/go-savetime/hashes"
 	"github.com/botherder/go-savetime/slice"
-	"github.com/i582/cfmt"
+	"github.com/i582/cfmt/cmd/cfmt"
 	"github.com/manifoldco/promptui"
 )
 
