@@ -14,7 +14,7 @@ import (
 func (a *Acquisition) Processes() error {
 	fmt.Println("Extracting list of running processes...")
 
-	out, err := a.ADB.Shell("ps")
+	out, err := a.ADB.Shell("ps -A")
 	if err != nil {
 		return fmt.Errorf("failed to run `adb shell ps`: %v", err)
 	}
