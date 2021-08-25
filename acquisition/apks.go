@@ -60,7 +60,7 @@ func (a *Acquisition) DownloadAPKs() error {
 	cfmt.Printf("Found a total of {{%d}}::cyan|bold installed packages\n",
 		len(packages))
 
-	fmt.Println("Would you like to download all APKs or only those not known?")
+	fmt.Println("Would you like to download copies of all apps or only non-system ones?")
 	promptAll := promptui.Select{
 		Label: "Download",
 		Items: []string{apkAll, apkNotSystem, apkNone},
