@@ -13,15 +13,14 @@ import (
 	"strings"
 
 	"github.com/botherder/go-savetime/hashes"
-	"github.com/botherder/go-savetime/slice"
 	"github.com/i582/cfmt/cmd/cfmt"
 	"github.com/manifoldco/promptui"
 )
 
 const (
-	apkAll      = "All"
-	apkNotKnown = "Only not known"
-	apkNone     = "Do not download any"
+	apkAll       = "All"
+	apkNotSystem = "Only non-system packages"
+	apkNone      = "Do not download any"
 )
 
 type File struct {
@@ -64,7 +63,7 @@ func (a *Acquisition) DownloadAPKs() error {
 	fmt.Println("Would you like to download all APKs or only those not known?")
 	promptAll := promptui.Select{
 		Label: "Download",
-		Items: []string{apkAll, apkNotKnown, apkNone},
+		Items: []string{apkAll, apkNotSystem, apkNone},
 	}
 	_, downloadOption, err := promptAll.Run()
 	if err != nil {
@@ -76,7 +75,9 @@ func (a *Acquisition) DownloadAPKs() error {
 	// Otherwise we walk through the list of package, pull the files, and hash them.
 	if downloadOption != apkNone {
 		for i, p := range packages {
-			if downloadOption != apkAll && slice.Contains(packageFilter, p.Name) {
+			// If we the user did not request to download all packages and if
+			// the package is marked as system, we skip it.
+			if downloadOption != apkAll && p.System == true {
 				continue
 			}
 
