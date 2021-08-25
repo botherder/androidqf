@@ -31,7 +31,7 @@ Now androidqf should be executing and creating an acquisition folder at the same
 The following data can be extracted:
 
 1. A list of all packages installed and related distribution files.
-2. (Optional) Copy of all installed APKs or of only those not safelisted by androidqf.
+2. (Optional) Copy of all installed APKs or of only those not marked as system apps.
 3. The output of the `dumpsys` shell command, providing diagnostic information about the device.
 4. The output of the `getprop` shell command, providing build information and configuration parameters.
 5. The output of the `ps` shell command, providing a list of all running processes.
