@@ -10,4 +10,4 @@ require (
 	github.com/satori/go.uuid v1.2.0
 )
 
-require golang.org/x/sys v0.0.0-20210823070655-63515b42dcdf // indirect
+require golang.org/x/sys v0.0.0-20220128215802-99c3d69c2c27 // indirect
