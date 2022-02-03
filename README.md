@@ -34,8 +34,9 @@ The following data can be extracted:
 2. (Optional) Copy of all installed APKs or of only those not marked as system apps.
 3. The output of the `dumpsys` shell command, providing diagnostic information about the device.
 4. The output of the `getprop` shell command, providing build information and configuration parameters.
-5. The output of the `ps` shell command, providing a list of all running processes.
-6. (Optional) A backup of SMS and MMS messages.
+5. All system settings.
+6. The output of the `ps` shell command, providing a list of all running processes.
+7. (Optional) A backup of SMS and MMS messages.
 
 ## Encryption & Potential Threats
 
