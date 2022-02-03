@@ -8,7 +8,6 @@ package adb
 import (
 	"fmt"
 	"reflect"
-	"strconv"
 	"strings"
 )
 
@@ -73,7 +72,7 @@ func (a *ADB) getPackageFiles(packageName string) []PackageFile {
 
 // GetPackages returns the list of installed package names.
 func (a *ADB) GetPackages() ([]Package, error) {
-	out, err := a.Shell("pm", "list", "packages", "-U", "-u", "-i")
+	out, err := a.Shell("pm", "list", "packages", "-u", "-i")
 	if err != nil {
 		return []Package{}, fmt.Errorf("failed to launch `pm list packages` command: %v",
 			err)
@@ -84,7 +83,6 @@ func (a *ADB) GetPackages() ([]Package, error) {
 		fields := strings.Fields(line)
 		packageName := strings.TrimPrefix(strings.TrimSpace(fields[0]), "package:")
 		installer := strings.TrimPrefix(strings.TrimSpace(fields[1]), "installer=")
-		uid, _ := strconv.Atoi(strings.TrimPrefix(strings.TrimSpace(fields[2]), "uid:"))
 
 		if packageName == "" {
 			continue
@@ -93,7 +91,6 @@ func (a *ADB) GetPackages() ([]Package, error) {
 		newPackage := Package{
 			Name:       packageName,
 			Installer:  installer,
-			UID:        uid,
 			Disabled:   false,
 			System:     false,
 			ThirdParty: false,
