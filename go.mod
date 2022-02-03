@@ -1,6 +1,6 @@
 module github.com/botherder/androidqf
 
-go 1.17
+go 1.15
 
 require (
 	filippo.io/age v1.0.0
