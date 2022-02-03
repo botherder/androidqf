@@ -12,7 +12,6 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/botherder/go-savetime/hashes"
 	"github.com/i582/cfmt/cmd/cfmt"
 	"github.com/manifoldco/promptui"
 )
@@ -74,7 +73,7 @@ func (a *Acquisition) DownloadAPKs() error {
 	// If the user decides to not download any APK, then we skip this.
 	// Otherwise we walk through the list of package, pull the files, and hash them.
 	if downloadOption != apkNone {
-		for i, p := range packages {
+		for _, p := range packages {
 			// If we the user did not request to download all packages and if
 			// the package is marked as system, we skip it.
 			if downloadOption != apkAll && p.System == true {
@@ -98,15 +97,6 @@ func (a *Acquisition) DownloadAPKs() error {
 
 					cfmt.Printf("Downloaded {{%s}}::cyan|underline to {{%s}}::magenta|underline\n",
 						pFilePath, localPath)
-
-					sha256, _ := hashes.FileSHA256(localPath)
-					file := File{
-						Path:      pFilePath,
-						LocalName: filepath.Base(localPath),
-						SHA256:    sha256,
-					}
-
-					packages[i].Files = append(packages[i].Files, file)
 				}
 			}
 		}
