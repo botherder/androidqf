@@ -8,6 +8,8 @@ androidqf is intended to provide a simple and portable cross-platform utility to
 
 [Download androidqf](https://github.com/botherder/androidqf/releases/latest)
 
+![](androidqf.png)
+
 ## Build
 
 Executable binaries for Linux, Windows and Mac should be available in the [latest release](https://github.com/botherder/androidqf/releases/latest). In case you have issues running the binary you might want to build it by yourself.
