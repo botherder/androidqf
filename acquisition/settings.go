@@ -6,11 +6,9 @@
 package acquisition
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 )
 
 func (a *Acquisition) Settings() error {
@@ -27,32 +25,15 @@ func (a *Acquisition) Settings() error {
 				namespace, err)
 		}
 
-		for _, line := range strings.Split(out, "\n") {
-			line = strings.TrimSpace(line)
-			if line == "" {
-				continue
-			}
-
-			fields := strings.SplitN(line, "=", 2)
-			if len(fields) != 2 {
-				continue
-			}
-			results[namespace][fields[0]] = fields[1]
+		fileName := fmt.Sprintf("settings_%s.txt", namespace)
+		file, err := os.Create(filepath.Join(a.StoragePath, fileName))
+		if err != nil {
+			return fmt.Errorf("failed to create %s file: %v", fileName, err)
 		}
+		defer file.Close()
+
+		file.WriteString(out)
 	}
-
-	settingsJSONPath := filepath.Join(a.StoragePath, "settings.json")
-	settingsJSON, err := os.Create(settingsJSONPath)
-	if err != nil {
-		return fmt.Errorf("failed to save settings to file: %v",
-			err)
-	}
-	defer settingsJSON.Close()
-
-	buf, _ := json.MarshalIndent(results, "", "    ")
-
-	settingsJSON.WriteString(string(buf[:]))
-	settingsJSON.Sync()
 
 	return nil
 }
