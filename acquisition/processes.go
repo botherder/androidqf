@@ -16,7 +16,7 @@ func (a *Acquisition) Processes() error {
 
 	out, err := a.ADB.Shell("ps -A")
 	if err != nil {
-		return fmt.Errorf("failed to run `adb shell ps`: %v", err)
+		return fmt.Errorf("failed to run `adb shell ps -A`: %v", err)
 	}
 
 	fileName := "ps.txt"
