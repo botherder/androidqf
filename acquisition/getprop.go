@@ -16,7 +16,7 @@ func (a *Acquisition) GetProp() error {
 
 	out, err := a.ADB.Shell("getprop")
 	if err != nil {
-		return fmt.Errorf("failed to run `adb shellgetprop`: %v", err)
+		return fmt.Errorf("failed to run `adb shell getprop`: %v", err)
 	}
 
 	fileName := "getprop.txt"
