@@ -1,6 +1,6 @@
 module github.com/botherder/androidqf
 
-go 1.15
+go 1.17
 
 require (
 	filippo.io/age v1.0.0
@@ -11,6 +11,9 @@ require (
 )
 
 require (
-	golang.org/x/sys v0.0.0-20220128215802-99c3d69c2c27 // indirect
+	github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e // indirect
+	github.com/gookit/color v1.3.2 // indirect
+	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519 // indirect
+	golang.org/x/sys v0.0.0-20220829200755-d48e67d00261 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 )
