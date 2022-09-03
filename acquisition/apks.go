@@ -42,7 +42,7 @@ func (a *Acquisition) getPathToLocalCopy(packageName, filePath string) string {
 		}
 
 		counter++
-		localPath = filepath.Join(a.APKSPath, fmt.Sprintf("%s%s_%s.apk", packageName, fileName, counter))
+		localPath = filepath.Join(a.APKSPath, fmt.Sprintf("%s%s_%d.apk", packageName, fileName, counter))
 	}
 
 	return localPath
