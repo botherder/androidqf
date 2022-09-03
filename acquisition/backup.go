@@ -36,10 +36,8 @@ func (a *Acquisition) Backup() error {
 	switch backupOption {
 	case backupOnlySMS:
 		arg = "com.android.providers.telephony"
-		break
 	case backupEverything:
 		arg = "-all"
-		break
 	case backupNothing:
 		return nil
 	}

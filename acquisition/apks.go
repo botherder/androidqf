@@ -36,7 +36,7 @@ func (a *Acquisition) getPathToLocalCopy(packageName, filePath string) string {
 
 	localPath := filepath.Join(a.APKSPath, fmt.Sprintf("%s%s.apk", packageName, fileName))
 	counter := 0
-	for true {
+	for {
 		if _, err := os.Stat(localPath); os.IsNotExist(err) {
 			break
 		}
@@ -76,7 +76,7 @@ func (a *Acquisition) DownloadAPKs() error {
 		for _, p := range packages {
 			// If we the user did not request to download all packages and if
 			// the package is marked as system, we skip it.
-			if downloadOption != apkAll && p.System == true {
+			if downloadOption != apkAll && p.System {
 				continue
 			}
 
