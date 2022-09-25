@@ -6,10 +6,10 @@
 package adb
 
 import (
-	"io/ioutil"
 	"os/exec"
 	"path/filepath"
 
+	"github.com/botherder/androidqf/assets"
 	"github.com/botherder/androidqf/utils"
 )
 
@@ -20,38 +20,11 @@ func (a *ADB) findExe() error {
 		return nil
 	}
 
-	cwd := utils.GetBinFolder()
-
-	dll1Path := filepath.Join(cwd, "AdbWinApi.dll")
-	dll1Data, err := Asset("AdbWinApi.dll")
-	if err != nil {
-		return err
-	}
-	err = ioutil.WriteFile(dll1Path, dll1Data, 0755)
+	err = assets.DeployAssets()
 	if err != nil {
 		return err
 	}
 
-	dll2Path := filepath.Join(cwd, "AdbWinUsbApi.dll")
-	dll2Data, err := Asset("AdbWinUsbApi.dll")
-	if err != nil {
-		return err
-	}
-	err = ioutil.WriteFile(dll2Path, dll2Data, 0755)
-	if err != nil {
-		return err
-	}
-
-	adbPath = filepath.Join(cwd, "adb.exe")
-	adbData, err := Asset("adb.exe")
-	if err != nil {
-		return err
-	}
-	err = ioutil.WriteFile(adbPath, adbData, 0755)
-	if err != nil {
-		return err
-	}
-
-	a.ExePath = adbPath
+	a.ExePath = filepath.Join(utils.GetBinFolder(), "adb.exe")
 	return nil
 }

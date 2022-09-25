@@ -18,13 +18,11 @@ lint:
 deps:
 	@echo "[deps] Installing dependencies..."
 	go mod download
-	go get -u github.com/go-bindata/go-bindata/v3/...
 	go mod tidy
 	@echo "[deps] Dependencies installed."
 
-windows: deps
+windows:
 	@mkdir -p $(BUILD_FOLDER)
-	@mkdir -p $(ASSETS_FOLDER)
 
 	@if [ ! -f /tmp/$(PLATFORMTOOLS_WINDOWS) ]; then \
 		@echo "Downloading Windows Android Platform Tools..."; \
@@ -36,7 +34,6 @@ windows: deps
 	@cp $(PLATFORMTOOLS_FOLDER)/AdbWinApi.dll $(ASSETS_FOLDER)
 	@cp $(PLATFORMTOOLS_FOLDER)/AdbWinUsbApi.dll $(ASSETS_FOLDER)
 	@cp $(PLATFORMTOOLS_FOLDER)/adb.exe $(ASSETS_FOLDER)
-	@go-bindata -pkg adb -o adb/bindata.go -prefix $(ASSETS_FOLDER) $(ASSETS_FOLDER)
 
 	@echo "[builder] Building Windows binary for amd64"
 
@@ -44,9 +41,8 @@ windows: deps
 
 	@echo "[builder] Done!"
 
-darwin: deps
+darwin:
 	@mkdir -p $(BUILD_FOLDER)
-	@mkdir -p $(ASSETS_FOLDER)
 
 	@if [ ! -f /tmp/$(PLATFORMTOOLS_DARWIN) ]; then \
 		@echo "Downloading Darwin Android Platform Tools..."; \
@@ -56,7 +52,6 @@ darwin: deps
 	@rm -rf $(PLATFORMTOOLS_FOLDER)
 	@cd /tmp && unzip -u $(PLATFORMTOOLS_DARWIN)
 	@cp $(PLATFORMTOOLS_FOLDER)/adb $(ASSETS_FOLDER)
-	@go-bindata -pkg adb -o adb/bindata.go -prefix $(ASSETS_FOLDER) $(ASSETS_FOLDER)
 
 	@echo "[builder] Building Darwin binary for amd64"
 
@@ -64,9 +59,8 @@ darwin: deps
 
 	@echo "[builder] Done!"
 
-linux: deps
+linux:
 	@mkdir -p $(BUILD_FOLDER)
-	@mkdir -p $(ASSETS_FOLDER)
 
 	@if [ ! -f /tmp/$(PLATFORMTOOLS_LINUX) ]; then \
 		@echo "Downloading Linux Android Platform Tools..."; \
@@ -76,7 +70,6 @@ linux: deps
 	@rm -rf $(PLATFORMTOOLS_FOLDER)
 	@cd /tmp && unzip -u $(PLATFORMTOOLS_LINUX)
 	@cp $(PLATFORMTOOLS_FOLDER)/adb $(ASSETS_FOLDER)
-	@go-bindata -pkg adb -o adb/bindata.go -prefix $(ASSETS_FOLDER) $(ASSETS_FOLDER)
 
 	@echo "[builder] Building Linux binary for amd64"
 
@@ -85,6 +78,5 @@ linux: deps
 	@echo "[builder] Done!"
 
 clean:
-	rm -rf $(ASSETS_FOLDER)
 	rm -rf $(BUILD_FOLDER)
-	rm -f ./*/bindata.go
+	rm -f $(ASSETS_FOLDER)/adb $(ASSETS_FOLDER)/adb.exe $(ASSETS_FOLDER)/AdbWinApi.dll $(ASSETS_FOLDER)/AdbWinUsbApi.dll

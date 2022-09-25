@@ -15,5 +15,5 @@
 # vendor/
 
 build/
-assets/
-bindata.go
+
+assets/adb

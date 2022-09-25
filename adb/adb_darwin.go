@@ -6,10 +6,10 @@
 package adb
 
 import (
-	"io/ioutil"
 	"os/exec"
 	"path/filepath"
 
+	"github.com/botherder/androidqf/assets"
 	"github.com/botherder/androidqf/utils"
 )
 
@@ -20,17 +20,11 @@ func (a *ADB) findExe() error {
 		return nil
 	}
 
-	adbPath = filepath.Join(utils.GetBinFolder(), "adb")
-	adbData, err := Asset("adb")
+	err = assets.DeployAssets()
 	if err != nil {
 		return err
 	}
 
-	err = ioutil.WriteFile(adbPath, adbData, 0755)
-	if err != nil {
-		return err
-	}
-
-	a.ExePath = adbPath
+	a.ExePath = filepath.Join(utils.GetBinFolder(), "adb")
 	return nil
 }
