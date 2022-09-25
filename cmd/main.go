@@ -79,6 +79,8 @@ func main() {
 		printError("Failed to create backup", err)
 	}
 
+	acq.Complete()
+
 	err = acq.StoreSecurely()
 	if err != nil {
 		printError("Something failed while encrypting the acquisition", err)

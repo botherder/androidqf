@@ -6,7 +6,9 @@
 package acquisition
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"time"
@@ -17,11 +19,12 @@ import (
 )
 
 type Acquisition struct {
-	UUID        string
-	ADB         *adb.ADB
-	StoragePath string
-	APKSPath    string
-	Datetime    time.Time
+	UUID        string    `json:"uuid"`
+	ADB         *adb.ADB  `json:"-"`
+	StoragePath string    `json:"storage_path"`
+	APKSPath    string    `json:"apks_path"`
+	Started     time.Time `json:"started"`
+	Completed   time.Time `json:"completed"`
 }
 
 // New returns a new Acquisition instance.
@@ -29,7 +32,7 @@ func New() (*Acquisition, error) {
 	acq := Acquisition{}
 	uuidBytes := uuid.NewV4()
 	acq.UUID = uuidBytes.String()
-	acq.Datetime = time.Now().UTC()
+	acq.Started = time.Now().UTC()
 
 	err := acq.initADB()
 	if err != nil {
@@ -42,6 +45,10 @@ func New() (*Acquisition, error) {
 	}
 
 	return &acq, nil
+}
+
+func (a *Acquisition) Complete() {
+	a.Completed = time.Now().UTC()
 }
 
 func (a *Acquisition) initADB() error {
@@ -71,6 +78,26 @@ func (a *Acquisition) createFolder() error {
 	err = os.Mkdir(a.APKSPath, 0755)
 	if err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (a *Acquisition) StoreInfo() error {
+	fmt.Println("Saving details about acquisition and device...")
+
+	info, err := json.MarshalIndent(a, "", " ")
+	if err != nil {
+		return fmt.Errorf("failed to json marshal the acquisition details: %v",
+			err)
+	}
+
+	infoPath := filepath.Join(a.StoragePath, "acquisition.json")
+
+	err = ioutil.WriteFile(infoPath, info, 0644)
+	if err != nil {
+		return fmt.Errorf("failed to write acquisition details to file: %v",
+			err)
 	}
 
 	return nil
