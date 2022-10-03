@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 
 	"github.com/botherder/androidqf/assets"
-	"github.com/botherder/androidqf/utils"
+	saveRuntime "github.com/botherder/go-savetime/runtime"
 )
 
 func (a *ADB) findExe() error {
@@ -25,6 +25,6 @@ func (a *ADB) findExe() error {
 		return err
 	}
 
-	a.ExePath = filepath.Join(utils.GetBinFolder(), "adb")
+	a.ExePath = filepath.Join(saveRuntime.GetExecutableDirectory(), "adb")
 	return nil
 }

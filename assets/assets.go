@@ -9,7 +9,7 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
-	"github.com/botherder/androidqf/utils"
+	saveRuntime "github.com/botherder/go-savetime/runtime"
 )
 
 type Asset struct {
@@ -19,7 +19,7 @@ type Asset struct {
 
 // DeployAssets is used to retrieve the embedded adb binaries and store them.
 func DeployAssets() error {
-	cwd := utils.GetBinFolder()
+	cwd := saveRuntime.GetExecutableDirectory()
 
 	for _, asset := range getAssets() {
 		assetPath := filepath.Join(cwd, asset.Name)

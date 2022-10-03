@@ -14,7 +14,7 @@ import (
 	"time"
 
 	"github.com/botherder/androidqf/adb"
-	"github.com/botherder/androidqf/utils"
+	saveRuntime "github.com/botherder/go-savetime/runtime"
 	"github.com/satori/go.uuid"
 )
 
@@ -68,7 +68,7 @@ func (a *Acquisition) initADB() error {
 }
 
 func (a *Acquisition) createFolder() error {
-	a.StoragePath = filepath.Join(utils.GetBinFolder(), a.UUID)
+	a.StoragePath = filepath.Join(saveRuntime.GetExecutableDirectory(), a.UUID)
 	err := os.Mkdir(a.StoragePath, 0755)
 	if err != nil {
 		return err

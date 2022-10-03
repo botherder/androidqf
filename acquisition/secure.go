@@ -14,12 +14,12 @@ import (
 	"strings"
 
 	"filippo.io/age"
-	"github.com/botherder/androidqf/utils"
 	"github.com/botherder/go-savetime/files"
+	saveRuntime "github.com/botherder/go-savetime/runtime"
 )
 
 func (a *Acquisition) StoreSecurely() error {
-	cwd := utils.GetBinFolder()
+	cwd := saveRuntime.GetExecutableDirectory()
 
 	keyFilePath := filepath.Join(cwd, "key.txt")
 	if _, err := os.Stat(keyFilePath); os.IsNotExist(err) {
