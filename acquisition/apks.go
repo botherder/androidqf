@@ -49,7 +49,7 @@ func (a *Acquisition) getPathToLocalCopy(packageName, filePath string) string {
 }
 
 func (a *Acquisition) DownloadAPKs() error {
-	fmt.Println("Downloading copies of installed apps...")
+	fmt.Println("Collecting information on installed apps. This might take a while...")
 
 	packages, err := a.ADB.GetPackages()
 	if err != nil {

@@ -33,6 +33,7 @@ type Package struct {
 func (a *ADB) getPackageFiles(packageName string) []PackageFile {
 	out, err := a.Shell("pm", "path", packageName)
 	if err != nil {
+		fmt.Printf("Failed to get file paths for package %s: %v: %s\n", packageName, err, out)
 		return []PackageFile{}
 	}
 
@@ -73,7 +74,7 @@ func (a *ADB) getPackageFiles(packageName string) []PackageFile {
 // GetPackages returns the list of installed package names.
 func (a *ADB) GetPackages() ([]Package, error) {
 	out, err := a.Shell("pm", "list", "packages", "-u", "-i")
-	if err != nil {
+	if err != nil && out == "" {
 		return []Package{}, fmt.Errorf("failed to launch `pm list packages` command: %v",
 			err)
 	}
@@ -107,7 +108,9 @@ func (a *ADB) GetPackages() ([]Package, error) {
 	}
 	for _, cmd := range cmds {
 		out, err = a.Shell("pm", "list", "packages", cmd["arg"])
-		if err != nil {
+		if err != nil && out == "" {
+			fmt.Printf("Failed to get packages filtered by `%s`: %v: %s\n",
+				cmd["arg"], err, out)
 			continue
 		}
 

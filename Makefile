@@ -25,7 +25,7 @@ windows:
 	@mkdir -p $(BUILD_FOLDER)
 
 	@if [ ! -f /tmp/$(PLATFORMTOOLS_WINDOWS) ]; then \
-		@echo "Downloading Windows Android Platform Tools..."; \
+		echo "Downloading Windows Android Platform Tools..."; \
 		wget $(PLATFORMTOOLS_URL)$(PLATFORMTOOLS_WINDOWS) -O /tmp/$(PLATFORMTOOLS_WINDOWS); \
 	fi
 
@@ -45,7 +45,7 @@ darwin:
 	@mkdir -p $(BUILD_FOLDER)
 
 	@if [ ! -f /tmp/$(PLATFORMTOOLS_DARWIN) ]; then \
-		@echo "Downloading Darwin Android Platform Tools..."; \
+		echo "Downloading Darwin Android Platform Tools..."; \
 		wget $(PLATFORMTOOLS_URL)$(PLATFORMTOOLS_DARWIN) -O /tmp/$(PLATFORMTOOLS_DARWIN); \
 	fi
 
@@ -63,7 +63,7 @@ linux:
 	@mkdir -p $(BUILD_FOLDER)
 
 	@if [ ! -f /tmp/$(PLATFORMTOOLS_LINUX) ]; then \
-		@echo "Downloading Linux Android Platform Tools..."; \
+		echo "Downloading Linux Android Platform Tools..."; \
 		wget $(PLATFORMTOOLS_URL)$(PLATFORMTOOLS_LINUX) -O /tmp/$(PLATFORMTOOLS_LINUX); \
 	fi
 

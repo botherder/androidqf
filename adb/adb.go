@@ -43,8 +43,13 @@ func (a *ADB) GetState() (string, error) {
 func (a *ADB) Shell(cmd ...string) (string, error) {
 	fullCmd := append([]string{"shell"}, cmd...)
 	out, err := exec.Command(a.ExePath, fullCmd...).Output()
+
 	if err != nil {
-		return "", err
+		if out == nil {
+			return "", err
+		}
+		// Still return a value because some commands returns 1 but still works.
+		return strings.TrimSpace(string(out)), err
 	}
 
 	return strings.TrimSpace(string(out)), nil
@@ -64,4 +69,23 @@ func (a *ADB) Pull(remotePath, localPath string) (string, error) {
 func (a *ADB) Backup(arg string) error {
 	cmd := exec.Command(a.ExePath, "backup", arg)
 	return cmd.Run()
+}
+
+// List files in a folder using ls, returns array of strings.
+func (a *ADB) ListFiles(remotePath string) []string {
+	var remoteFiles []string
+
+	out, _ := a.Shell("find", remotePath, "2>", "/dev/null")
+	if out == "" {
+		return []string{}
+	}
+
+	for _, file := range strings.Split(out, "\n") {
+		if strings.HasPrefix(file, "find:") {
+			continue
+		}
+		remoteFiles = append(remoteFiles, file)
+	}
+
+	return remoteFiles
 }

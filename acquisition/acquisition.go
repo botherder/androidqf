@@ -23,6 +23,7 @@ type Acquisition struct {
 	ADB         *adb.ADB  `json:"-"`
 	StoragePath string    `json:"storage_path"`
 	APKSPath    string    `json:"apks_path"`
+	LogsPath    string    `json:"logs_path"`
 	Started     time.Time `json:"started"`
 	Completed   time.Time `json:"completed"`
 }
@@ -39,7 +40,7 @@ func New() (*Acquisition, error) {
 		return nil, fmt.Errorf("failed to initialize adb: %v", err)
 	}
 
-	err = acq.createFolder()
+	err = acq.createFolders()
 	if err != nil {
 		return nil, fmt.Errorf("failed to create acquisition folder: %v", err)
 	}
@@ -67,7 +68,7 @@ func (a *Acquisition) initADB() error {
 	return nil
 }
 
-func (a *Acquisition) createFolder() error {
+func (a *Acquisition) createFolders() error {
 	a.StoragePath = filepath.Join(saveRuntime.GetExecutableDirectory(), a.UUID)
 	err := os.Mkdir(a.StoragePath, 0755)
 	if err != nil {
@@ -79,6 +80,29 @@ func (a *Acquisition) createFolder() error {
 	if err != nil {
 		return err
 	}
+
+	a.LogsPath = filepath.Join(a.StoragePath, "logs")
+	err = os.Mkdir(a.LogsPath, 0755)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (a *Acquisition) saveOutput(fileName, output string) error {
+	file, err := os.Create(filepath.Join(a.StoragePath, fileName))
+	if err != nil {
+		return fmt.Errorf("failed to create %s file: %v", fileName, err)
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(output)
+	if err != nil {
+		return fmt.Errorf("failed to write output to %s: %v", fileName, err)
+	}
+
+	file.Sync()
 
 	return nil
 }

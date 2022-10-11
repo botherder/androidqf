@@ -1,10 +1,10 @@
 module github.com/botherder/androidqf
 
-go 1.17
+go 1.18
 
 require (
 	filippo.io/age v1.0.0
-	github.com/botherder/go-savetime v1.3.0
+	github.com/botherder/go-savetime v1.4.0
 	github.com/i582/cfmt v1.4.0
 	github.com/manifoldco/promptui v0.9.0
 	github.com/satori/go.uuid v1.2.0

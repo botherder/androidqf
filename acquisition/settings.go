@@ -7,12 +7,10 @@ package acquisition
 
 import (
 	"fmt"
-	"os"
-	"path/filepath"
 )
 
 func (a *Acquisition) Settings() error {
-	fmt.Println("Extracting device settings...")
+	fmt.Println("Collecting device settings...")
 
 	results := map[string]map[string]string{}
 	namespaces := []string{"system", "secure", "global"}
@@ -25,14 +23,10 @@ func (a *Acquisition) Settings() error {
 				namespace, err)
 		}
 
-		fileName := fmt.Sprintf("settings_%s.txt", namespace)
-		file, err := os.Create(filepath.Join(a.StoragePath, fileName))
+		err = a.saveOutput(fmt.Sprintf("settings_%s.txt", namespace), out)
 		if err != nil {
-			return fmt.Errorf("failed to create %s file: %v", fileName, err)
+			fmt.Println(err)
 		}
-		defer file.Close()
-
-		file.WriteString(out)
 	}
 
 	return nil

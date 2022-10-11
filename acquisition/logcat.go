@@ -9,13 +9,13 @@ import (
 	"fmt"
 )
 
-func (a *Acquisition) GetProp() error {
-	fmt.Println("Collecting device properties...")
+func (a *Acquisition) Logcat() error {
+	fmt.Println("Collecting logcat...")
 
-	out, err := a.ADB.Shell("getprop")
+	out, err := a.ADB.Shell("logcat", "-d", "-b", "all", "\"*:V\"")
 	if err != nil {
-		return fmt.Errorf("failed to run `adb shell getprop`: %v", err)
+		return fmt.Errorf("Failed to run `adb shell logcat`: %v\n", err)
 	}
 
-	return a.saveOutput("getprop.txt", out)
+	return a.saveOutput("logcat.txt", out)
 }

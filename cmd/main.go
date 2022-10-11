@@ -54,6 +54,10 @@ func main() {
 	cfmt.Printf("Started new acquisition {{%s}}::magenta|underline\n",
 		acq.UUID)
 
+	err = acq.Backup()
+	if err != nil {
+		printError("Failed to create backup", err)
+	}
 	err = acq.GetProp()
 	if err != nil {
 		printError("Failed to get device properties", err)
@@ -66,6 +70,18 @@ func main() {
 	if err != nil {
 		printError("Failed to get list of running processes", err)
 	}
+	err = acq.Services()
+	if err != nil {
+		printError("Failed to get list of running services", err)
+	}
+	err = acq.Logcat()
+	if err != nil {
+		printError("Failed to get logcat from device", err)
+	}
+	err = acq.Logs()
+	if err != nil {
+		printError("Failed to download logs from device", err)
+	}
 	err = acq.DumpSys()
 	if err != nil {
 		printError("Failed to get output of dumpsys", err)
@@ -73,10 +89,6 @@ func main() {
 	err = acq.DownloadAPKs()
 	if err != nil {
 		printError("Failed to download APKs", err)
-	}
-	err = acq.Backup()
-	if err != nil {
-		printError("Failed to create backup", err)
 	}
 
 	acq.Complete()

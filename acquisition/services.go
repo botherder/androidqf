@@ -9,13 +9,13 @@ import (
 	"fmt"
 )
 
-func (a *Acquisition) GetProp() error {
-	fmt.Println("Collecting device properties...")
+func (a *Acquisition) Services() error {
+	fmt.Println("Collecting list of services...")
 
-	out, err := a.ADB.Shell("getprop")
+	out, err := a.ADB.Shell("service list")
 	if err != nil {
-		return fmt.Errorf("failed to run `adb shell getprop`: %v", err)
+		return fmt.Errorf("failed to run `adb shell service list`: %v", err)
 	}
 
-	return a.saveOutput("getprop.txt", out)
+	return a.saveOutput("services.txt", out)
 }

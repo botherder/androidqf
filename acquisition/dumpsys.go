@@ -7,26 +7,15 @@ package acquisition
 
 import (
 	"fmt"
-	"os"
-	"path/filepath"
 )
 
 func (a *Acquisition) DumpSys() error {
-	fmt.Println("Extracting device diagnostic information. This might take a while...")
+	fmt.Println("Collecting device diagnostic information. This might take a while...")
 
 	out, err := a.ADB.Shell("dumpsys")
 	if err != nil {
 		return fmt.Errorf("failed to run `adb shell dumpsys`: %v", err)
 	}
 
-	fileName := "dumpsys.txt"
-	file, err := os.Create(filepath.Join(a.StoragePath, fileName))
-	if err != nil {
-		return fmt.Errorf("failed to create %s file: %v", fileName, err)
-	}
-	defer file.Close()
-
-	file.WriteString(out)
-
-	return nil
+	return a.saveOutput("dumpsys.txt", out)
 }
