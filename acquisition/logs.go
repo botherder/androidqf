@@ -39,7 +39,7 @@ func (a *Acquisition) Logs() error {
 
 		err := os.MkdirAll(localDir, 0755)
 		if err != nil {
-			fmt.Printf("Failed to create folders for logs %s: %v", localDir, err)
+			fmt.Printf("Failed to create folders for logs %s: %v\n", localDir, err)
 			continue
 		}
 
