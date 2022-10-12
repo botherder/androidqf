@@ -138,25 +138,3 @@ func (a *ADB) GetPackages() ([]Package, error) {
 
 	return packages, nil
 }
-
-// GetPackagePaths returns a list of file paths associated with the provided
-// package name.
-func (a *ADB) GetPackagePaths(packageName string) ([]string, error) {
-	out, err := a.Shell("pm", "path", packageName)
-	if err != nil {
-		return []string{}, fmt.Errorf("failed to launch `pm path` command: %v",
-			err)
-	}
-
-	packagePaths := []string{}
-	for _, line := range strings.Split(out, "\n") {
-		packagePath := strings.TrimPrefix(strings.TrimSpace(line), "package:")
-		if packagePath == "" {
-			continue
-		}
-
-		packagePaths = append(packagePaths, packagePath)
-	}
-
-	return packagePaths, nil
-}

@@ -82,22 +82,19 @@ func (a *Acquisition) DownloadAPKs() error {
 
 			cfmt.Printf("Found Android package: {{%s}}::cyan|bold\n", p.Name)
 
-			pFilePaths, err := a.ADB.GetPackagePaths(p.Name)
-			if err == nil {
-				for _, pFilePath := range pFilePaths {
-					localPath := a.getPathToLocalCopy(p.Name, pFilePath)
+			for _, packageFile := range p.Files {
+				localPath := a.getPathToLocalCopy(p.Name, packageFile.Path)
 
-					out, err := a.ADB.Pull(pFilePath, localPath)
-					if err != nil {
-						cfmt.Printf("{{ERROR:}}::red|bold Failed to download {{%s}}::cyan|underline: {{%s}}::italic\n",
-							pFilePath, out)
+				out, err := a.ADB.Pull(packageFile.Path, localPath)
+				if err != nil {
+					cfmt.Printf("{{ERROR:}}::red|bold Failed to download {{%s}}::cyan|underline: {{%s}}::italic\n",
+						packageFile.Path, out)
 
-						continue
-					}
-
-					cfmt.Printf("Downloaded {{%s}}::cyan|underline to {{%s}}::magenta|underline\n",
-						pFilePath, localPath)
+					continue
 				}
+
+				cfmt.Printf("Downloaded {{%s}}::cyan|underline to {{%s}}::magenta|underline\n",
+					packageFile.Path, localPath)
 			}
 		}
 	}
