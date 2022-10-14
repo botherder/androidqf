@@ -12,12 +12,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: echo $(go env GOPATH)/bin >> $GITHUB_PATH
+
     - name: Build Windows binary
       run: make windows
     - name: Build Linux binary
       run: make linux
     - name: Build Darwin binary
       run: make darwin
+
     - name: Upload Windows binary
       uses: svenstaro/upload-release-action@v2
       with:
@@ -26,19 +28,39 @@ jobs:
         asset_name: androidqf_windows_amd64.exe
         tag: ${{ github.ref }}
         overwrite: true
+
     - name: Upload Linux binary
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: build/androidqf_linux_amd64
-        asset_name: androidqf_linux_amd64
+        asset_name: androidqf_$tag_linux_amd64
         tag: ${{ github.ref }}
-        overwrite: true        
+        overwrite: true
+
+    - name: Upload Linux arm64 binary
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: build/androidqf_linux_arm64
+        asset_name: androidqf_$tag_linux_arm64
+        tag: ${{ github.ref }}
+        overwrite: true
+
     - name: Upload Darwin binary
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: build/androidqf_darwin_amd64
-        asset_name: androidqf_darwin_amd64
+        asset_name: androidqf_$tag_darwin_amd64
         tag: ${{ github.ref }}
-        overwrite: true        
+        overwrite: true
+
+    - name: Upload Darwin arm64 binary
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: build/androidqf_darwin_arm64
+        asset_name: androidqf_$tag_darwin_arm64
+        tag: ${{ github.ref }}
+        overwrite: true
