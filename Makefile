@@ -1,8 +1,8 @@
 BUILD_FOLDER  = $(shell pwd)/build
 ASSETS_FOLDER = $(shell pwd)/assets
 
-FLAGS_LINUX   = GOOS=linux GOARCH=amd64
-FLAGS_DARWIN  = GOOS=darwin GOARCH=amd64
+FLAGS_LINUX   = GOOS=linux
+FLAGS_DARWIN  = GOOS=darwin
 FLAGS_WINDOWS = GOOS=windows GOARCH=amd64 CC=i686-w64-mingw32-gcc CGO_ENABLED=1
 
 PLATFORMTOOLS_URL     = https://dl.google.com/android/repository/
@@ -55,7 +55,8 @@ darwin:
 
 	@echo "[builder] Building Darwin binary for amd64"
 
-	$(FLAGS_DARWIN) go build --ldflags '-s -w' -o $(BUILD_FOLDER)/androidqf_darwin_amd64 ./cmd/
+	$(FLAGS_DARWIN) GOARCH=amd64 go build --ldflags '-s -w' -o $(BUILD_FOLDER)/androidqf_darwin_amd64 ./cmd/
+	$(FLAGS_DARWIN) GOARCH=arm64 go build --ldflags '-s -w' -o $(BUILD_FOLDER)/androidqf_darwin_arm64 ./cmd/
 
 	@echo "[builder] Done!"
 
@@ -73,7 +74,8 @@ linux:
 
 	@echo "[builder] Building Linux binary for amd64"
 
-	@$(FLAGS_LINUX) go build --ldflags '-s -w' -o $(BUILD_FOLDER)/androidqf_linux_amd64 ./cmd/
+	@$(FLAGS_LINUX) GOARCH=amd64 go build --ldflags '-s -w' -o $(BUILD_FOLDER)/androidqf_linux_amd64 ./cmd/
+	@$(FLAGS_LINUX) GOARCH=arm64 go build --ldflags '-s -w' -o $(BUILD_FOLDER)/androidqf_linux_arm64 ./cmd/
 
 	@echo "[builder] Done!"
 
