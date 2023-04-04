@@ -1,5 +1,5 @@
-BUILD_FOLDER  = $(shell pwd)/build
-ASSETS_FOLDER = $(shell pwd)/assets
+BUILD_FOLDER  = "$(shell pwd)/build"
+ASSETS_FOLDER = "$(shell pwd)/assets"
 
 FLAGS_LINUX   = GOOS=linux
 FLAGS_DARWIN  = GOOS=darwin
