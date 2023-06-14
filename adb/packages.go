@@ -1,8 +1,3 @@
-// androidqf - Android Quick Forensics
-// Copyright (c) 2021-2022 Claudio Guarnieri.
-// Use of this software is governed by the MVT License 1.1 that can be found at
-//   https://license.mvt.re/1.1/
-
 package adb
 
 import (
@@ -129,7 +124,10 @@ func (a *ADB) GetPackages() ([]Package, error) {
 				for i := 0; i < elems.NumField(); i++ {
 					fieldName := elems.Type().Field(i).Name
 					if fieldName == cmd["field"] {
-						reflect.ValueOf(&packages[pIndex]).Elem().FieldByName(fieldName).SetBool(true)
+						reflect.ValueOf(&packages[pIndex]).
+							Elem().
+							FieldByName(fieldName).
+							SetBool(true)
 					}
 				}
 			}

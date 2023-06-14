@@ -1,7 +1,4 @@
-// androidqf - Android Quick Forensics
-// Copyright (c) 2021-2022 Claudio Guarnieri.
-// Use of this software is governed by the MVT License 1.1 that can be found at
-//   https://license.mvt.re/1.1/
+//go:build linux
 
 package adb
 
@@ -10,7 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/botherder/androidqf/assets"
-	saveRuntime "github.com/botherder/go-savetime/runtime"
+	rt "github.com/botherder/go-savetime/runtime"
 )
 
 func (a *ADB) findExe() error {
@@ -25,6 +22,6 @@ func (a *ADB) findExe() error {
 		return err
 	}
 
-	a.ExePath = filepath.Join(saveRuntime.GetExecutableDirectory(), "adb")
+	a.ExePath = filepath.Join(rt.GetExecutableDirectory(), "adb")
 	return nil
 }

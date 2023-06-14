@@ -1,8 +1,3 @@
-// androidqf - Android Quick Forensics
-// Copyright (c) 2021-2022 Claudio Guarnieri.
-// Use of this software is governed by the MVT License 1.1 that can be found at
-//   https://license.mvt.re/1.1/
-
 package acquisition
 
 import (
@@ -15,11 +10,11 @@ import (
 
 	"filippo.io/age"
 	"github.com/botherder/go-savetime/files"
-	saveRuntime "github.com/botherder/go-savetime/runtime"
+	rt "github.com/botherder/go-savetime/runtime"
 )
 
 func (a *Acquisition) StoreSecurely() error {
-	cwd := saveRuntime.GetExecutableDirectory()
+	cwd := rt.GetExecutableDirectory()
 
 	keyFilePath := filepath.Join(cwd, "key.txt")
 	if _, err := os.Stat(keyFilePath); os.IsNotExist(err) {

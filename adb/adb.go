@@ -1,8 +1,3 @@
-// androidqf - Android Quick Forensics
-// Copyright (c) 2021-2022 Claudio Guarnieri.
-// Use of this software is governed by the MVT License 1.1 that can be found at
-//   https://license.mvt.re/1.1/
-
 package adb
 
 import (
@@ -15,13 +10,14 @@ type ADB struct {
 	ExePath string
 }
 
+var Client *ADB
+
 // New returns a new ADB instance.
 func New() (*ADB, error) {
 	adb := ADB{}
 	err := adb.findExe()
 	if err != nil {
-		return nil, fmt.Errorf("failed to find a usable adb executable: %v",
-			err)
+		return nil, fmt.Errorf("failed to find a usable adb executable: %v", err)
 	}
 
 	return &adb, nil
@@ -75,7 +71,7 @@ func (a *ADB) Backup(arg string) error {
 func (a *ADB) ListFiles(remotePath string) []string {
 	var remoteFiles []string
 
-	out, _ := a.Shell("find", remotePath, "2>", "/dev/null")
+	out, _ := a.Shell("find", remotePath, "-type", "f", "2>", "/dev/null")
 	if out == "" {
 		return []string{}
 	}

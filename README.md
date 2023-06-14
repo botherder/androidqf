@@ -2,9 +2,7 @@
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/botherder/androidqf)](https://goreportcard.com/report/github.com/botherder/androidqf)
 
-androidqf (Android Quick Forensics) is a portable tool to simplify the acquisition of relevant forensic data from Android devices. It is the successor of [Snoopdroid](https://github.com/botherder/snoopdroid), re-written in Go and leveraging official adb binaries.
-
-androidqf is intended to provide a simple and portable cross-platform utility to quickly acquire data from Android devices. It is similar in functionality to [mvt-android](https://github.com/mvt-project/mvt). However, contrary to MVT, androidqf is designed to be easily run by non-tech savvy users as well.
+androidqf (Android Quick Forensics) is a portable tool to simplify the acquisition of relevant forensic data from Android devices.
 
 [Download androidqf](https://github.com/botherder/androidqf/releases/latest)
 
@@ -14,7 +12,7 @@ androidqf is intended to provide a simple and portable cross-platform utility to
 
 Executable binaries for Linux, Windows and Mac should be available in the [latest release](https://github.com/botherder/androidqf/releases/latest). In case you have issues running the binary you might want to build it by yourself.
 
-In order to build androidqf you will need Go 1.15+ installed. You will also need to install `make`. When ready you can clone the repository and run any of the following commands, for your platform of choice:
+In order to build androidqf you will need Go 1.18+ installed. You will also need to install `make`. When ready you can clone the repository and run any of the following commands, for your platform of choice:
 
     make linux
     make darwin
@@ -30,15 +28,7 @@ Once USB debugging is enabled, you can proceed launching androidqf. It will firs
 
 Now androidqf should be executing and creating an acquisition folder at the same path you have placed your androidqf binary. At some point in the execution, androidqf will prompt you some choices: these prompts will pause the acquisition until you provide a selection, so pay attention.
 
-The following data can be extracted:
-
-1. A list of all packages installed and related distribution files.
-2. (Optional) Copy of all installed APKs or of only those not marked as system apps.
-3. The output of the `dumpsys` shell command, providing diagnostic information about the device.
-4. The output of the `getprop` shell command, providing build information and configuration parameters.
-5. All system settings.
-6. The output of the `ps` shell command, providing a list of all running processes.
-7. (Optional) A backup of SMS and MMS messages.
+Once the acquisition is completed, you should make sure to disable USB debugging and the developer options, or in any case restore the device to its original configuration.
 
 ## Encryption & Potential Threats
 

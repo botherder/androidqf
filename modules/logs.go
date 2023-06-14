@@ -1,9 +1,4 @@
-// androidqf - Android Quick Forensics
-// Copyright (c) 2021-2022 Claudio Guarnieri.
-// Use of this software is governed by the MVT License 1.1 that can be found at
-//   https://license.mvt.re/1.1/
-
-package acquisition
+package modules
 
 import (
 	"fmt"
@@ -11,10 +6,35 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/botherder/androidqf/adb"
 	"github.com/botherder/go-savetime/text"
 )
 
-func (a *Acquisition) Logs() error {
+type Logs struct {
+	StoragePath string
+	LogsPath    string
+}
+
+func NewLogs() *Logs {
+	return &Logs{}
+}
+
+func (l *Logs) Name() string {
+	return "logs"
+}
+
+func (l *Logs) InitStorage(storagePath string) error {
+	l.StoragePath = storagePath
+	l.LogsPath = filepath.Join(storagePath, "logs")
+	err := os.Mkdir(l.LogsPath, 0755)
+	if err != nil {
+		return fmt.Errorf("failed to create logs folder: %v", err)
+	}
+
+	return nil
+}
+
+func (l *Logs) Run() error {
 	fmt.Println("Collecting system logs...")
 
 	logFiles := []string{
@@ -25,7 +45,7 @@ func (a *Acquisition) Logs() error {
 	}
 
 	for _, logFolder := range []string{"/data/anr/", "/data/log/"} {
-		files := a.ADB.ListFiles(logFolder)
+		files := adb.Client.ListFiles(logFolder)
 		if len(files) == 0 {
 			continue
 		}
@@ -34,7 +54,7 @@ func (a *Acquisition) Logs() error {
 	}
 
 	for _, logFile := range logFiles {
-		localPath := filepath.Join(a.LogsPath, logFile)
+		localPath := filepath.Join(l.LogsPath, logFile)
 		localDir, _ := filepath.Split(localPath)
 
 		err := os.MkdirAll(localDir, 0755)
@@ -43,7 +63,7 @@ func (a *Acquisition) Logs() error {
 			continue
 		}
 
-		out, err := a.ADB.Pull(logFile, localPath)
+		out, err := adb.Client.Pull(logFile, localPath)
 		if err != nil {
 			if !text.ContainsNoCase(out, "Permission denied") {
 				fmt.Printf("Failed to pull log file %s: %s\n", logFile, strings.TrimSpace(out))
