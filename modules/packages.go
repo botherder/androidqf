@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/botherder/androidqf/adb"
@@ -76,7 +77,10 @@ func (p *Packages) Run() error {
 		return fmt.Errorf("failed to retrieve list of installed packages: %v", err)
 	}
 
-	// cfmt.Printf("Found a total of {{%d}}::cyan|bold installed packages\n", len(packages))
+	fmt.Printf(
+		"Found a total of %s installed packages\n",
+		color.CyanString(strconv.Itoa(len(packages))),
+	)
 
 	fmt.Println("Would you like to download copies of all apps or only non-system ones?")
 	downloadPrompt := promptui.Select{
@@ -91,10 +95,6 @@ func (p *Packages) Run() error {
 	// If the user decides to not download any APK, then we skip this.
 	// Otherwise we walk through the list of package, pull the files, and hash them.
 	if download != apkNone {
-		cyanBold := color.New(color.Bold, color.FgCyan).SprintFunc()
-		cyanUnderline := color.New(color.Underline, color.FgCyan).SprintFunc()
-		magentaUnderline := color.New(color.Underline, color.FgMagenta).SprintFunc()
-
 		for _, pack := range packages {
 			// If we the user did not request to download all packages and if
 			// the package is marked as system, we skip it.
@@ -102,7 +102,7 @@ func (p *Packages) Run() error {
 				continue
 			}
 
-			fmt.Printf("Found Android package: %s\n", cyanBold(pack.Name))
+			fmt.Printf("Found Android package: %s\n", color.CyanString(pack.Name))
 
 			for _, packageFile := range pack.Files {
 				localPath := p.getPathToLocalCopy(pack.Name, packageFile.Path)
@@ -117,8 +117,8 @@ func (p *Packages) Run() error {
 
 				fmt.Printf(
 					"Downloaded %s to %s\n",
-					cyanUnderline(packageFile.Path),
-					magentaUnderline(localPath),
+					color.CyanString(packageFile.Path),
+					color.MagentaString(localPath),
 				)
 			}
 		}
