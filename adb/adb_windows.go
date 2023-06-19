@@ -1,4 +1,6 @@
-//go:build windows
+// Copyright (c) 2021-2023 Claudio Guarnieri.
+// Use of this source code is governed by the MVT License 1.1
+// which can be found in the LICENSE file.
 
 package adb
 
