@@ -37,7 +37,7 @@ windows:
 
 	@echo "[builder] Building Windows binary for amd64"
 
-	$(FLAGS_WINDOWS) go build --ldflags '-s -w -extldflags "-static"' -o $(BUILD_FOLDER)/androidqf_windows_amd64.exe ./cmd/
+	$(FLAGS_WINDOWS) go build --ldflags '-s -w -extldflags "-static"' -o $(BUILD_FOLDER)/androidqf_windows_amd64.exe .
 
 	@echo "[builder] Done!"
 
@@ -55,8 +55,8 @@ darwin:
 
 	@echo "[builder] Building Darwin binary for amd64"
 
-	$(FLAGS_DARWIN) GOARCH=amd64 go build --ldflags '-s -w' -o $(BUILD_FOLDER)/androidqf_darwin_amd64 ./cmd/
-	$(FLAGS_DARWIN) GOARCH=arm64 go build --ldflags '-s -w' -o $(BUILD_FOLDER)/androidqf_darwin_arm64 ./cmd/
+	$(FLAGS_DARWIN) GOARCH=amd64 go build --ldflags '-s -w' -o $(BUILD_FOLDER)/androidqf_darwin_amd64 .
+	$(FLAGS_DARWIN) GOARCH=arm64 go build --ldflags '-s -w' -o $(BUILD_FOLDER)/androidqf_darwin_arm64 .
 
 	@echo "[builder] Done!"
 
@@ -74,8 +74,8 @@ linux:
 
 	@echo "[builder] Building Linux binary for amd64"
 
-	@$(FLAGS_LINUX) GOARCH=amd64 go build --ldflags '-s -w' -o $(BUILD_FOLDER)/androidqf_linux_amd64 ./cmd/
-	@$(FLAGS_LINUX) GOARCH=arm64 go build --ldflags '-s -w' -o $(BUILD_FOLDER)/androidqf_linux_arm64 ./cmd/
+	@$(FLAGS_LINUX) GOARCH=amd64 go build --ldflags '-s -w' -o $(BUILD_FOLDER)/androidqf_linux_amd64 .
+	@$(FLAGS_LINUX) GOARCH=arm64 go build --ldflags '-s -w' -o $(BUILD_FOLDER)/androidqf_linux_arm64 .
 
 	@echo "[builder] Done!"
 
