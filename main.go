@@ -17,7 +17,7 @@ import (
 
 func fatal(format string, args ...interface{}) {
 	msg := fmt.Sprintf(format, args...)
-	color.Red(fmt.Sprintf("FATAL: %s", msg))
+	color.Red("FATAL: %s", msg)
 	os.Exit(1)
 }
 
@@ -84,7 +84,7 @@ func main() {
 
 		err = mod.Run()
 		if err != nil {
-			color.Red(fmt.Sprintf("ERROR: failed to run module %s: %v", mod.Name(), err))
+			color.Red("ERROR: failed to run module %s: %v", mod.Name(), err)
 		}
 	}
 
@@ -92,7 +92,7 @@ func main() {
 
 	err = acq.StoreSecurely()
 	if err != nil {
-		color.Red(fmt.Sprintf("Something failed while encrypting the acquisition: %v", err))
+		color.Red("Something failed while encrypting the acquisition: %v", err)
 		color.Red("WARNING: The secure storage of the acquisition folder failed! The data is unencrypted!")
 	}
 
