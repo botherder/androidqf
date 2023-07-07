@@ -30,7 +30,7 @@ func (l *Logs) Name() string {
 func (l *Logs) InitStorage(storagePath string) error {
 	l.StoragePath = storagePath
 	l.LogsPath = filepath.Join(storagePath, "logs")
-	err := os.Mkdir(l.LogsPath, 0755)
+	err := os.Mkdir(l.LogsPath, 0o755)
 	if err != nil {
 		return fmt.Errorf("failed to create logs folder: %v", err)
 	}
@@ -61,7 +61,7 @@ func (l *Logs) Run() error {
 		localPath := filepath.Join(l.LogsPath, logFile)
 		localDir, _ := filepath.Split(localPath)
 
-		err := os.MkdirAll(localDir, 0755)
+		err := os.MkdirAll(localDir, 0o755)
 		if err != nil {
 			fmt.Printf("Failed to create folders for logs %s: %v\n", localDir, err)
 			continue

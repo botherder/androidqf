@@ -93,7 +93,9 @@ func main() {
 	err = acq.StoreSecurely()
 	if err != nil {
 		color.Red("Something failed while encrypting the acquisition: %v", err)
-		color.Red("WARNING: The secure storage of the acquisition folder failed! The data is unencrypted!")
+		color.Red(
+			"WARNING: The secure storage of the acquisition folder failed! The data is unencrypted!",
+		)
 	}
 
 	fmt.Println("Acquisition completed!")

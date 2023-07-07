@@ -39,7 +39,7 @@ func (p *Packages) Name() string {
 func (p *Packages) InitStorage(storagePath string) error {
 	p.StoragePath = storagePath
 	p.ApksPath = filepath.Join(storagePath, "apks")
-	err := os.Mkdir(p.ApksPath, 0755)
+	err := os.Mkdir(p.ApksPath, 0o755)
 	if err != nil {
 		return fmt.Errorf("failed to create apks folder: %v", err)
 	}

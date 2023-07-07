@@ -58,7 +58,7 @@ func (a *Acquisition) StoreSecurely() error {
 
 	encFileName := fmt.Sprintf("%s.age", zipFileName)
 	encFilePath := filepath.Join(cwd, encFileName)
-	encFile, err := os.OpenFile(encFilePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0600)
+	encFile, err := os.OpenFile(encFilePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0o600)
 	if err != nil {
 		return fmt.Errorf("unable to create encrypted file: %v", err)
 	}

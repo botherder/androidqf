@@ -25,12 +25,12 @@ type Acquisition struct {
 
 func New() (*Acquisition, error) {
 	acq := Acquisition{
-		UUID: uuid.New().String(),
+		UUID:    uuid.New().String(),
 		Started: time.Now().UTC(),
 	}
 
 	acq.StoragePath = filepath.Join(rt.GetExecutableDirectory(), acq.UUID)
-	err := os.Mkdir(acq.StoragePath, 0755)
+	err := os.Mkdir(acq.StoragePath, 0o755)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create acquisition folder: %v", err)
 	}
@@ -53,7 +53,7 @@ func (a *Acquisition) StoreInfo() error {
 
 	infoPath := filepath.Join(a.StoragePath, "acquisition.json")
 
-	err = ioutil.WriteFile(infoPath, info, 0644)
+	err = ioutil.WriteFile(infoPath, info, 0o644)
 	if err != nil {
 		return fmt.Errorf("failed to write acquisition details to file: %v",
 			err)
