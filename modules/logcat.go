@@ -33,7 +33,7 @@ func (l *Logcat) Run() error {
 
 	out, err := adb.Client.Shell("logcat", "-d", "-b", "all", "\"*:V\"")
 	if err != nil {
-		return fmt.Errorf("Failed to run `adb shell logcat`: %v\n", err)
+		return fmt.Errorf("failed to run `adb shell logcat`: %v", err)
 	}
 
 	return saveCommandOutput(filepath.Join(l.StoragePath, "logcat.txt"), out)

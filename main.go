@@ -51,7 +51,7 @@ func main() {
 	adb.Client, err = adb.New()
 	fatalIfError(err, "%v", err)
 
-	for true {
+	for {
 		_, err = adb.Client.GetState()
 		if err == nil {
 			break
