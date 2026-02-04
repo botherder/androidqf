@@ -2,6 +2,8 @@
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/botherder/androidqf)](https://goreportcard.com/report/github.com/botherder/androidqf)
 
+**NOTE: this project is currently not maintained. An independent fork can be found under the [MVT Project](https://github.com/mvt-project/androidqf).**
+
 androidqf (Android Quick Forensics) is a portable tool to simplify the acquisition of relevant forensic data from Android devices.
 
 [Download androidqf](https://github.com/botherder/androidqf/releases/latest)
